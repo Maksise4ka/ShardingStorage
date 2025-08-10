@@ -1,0 +1,9 @@
+﻿- name: master-a
+  master: "http://master-a:80"
+  replicas:
+    - "http://replica-a:80"
+      
+- name: master-b
+  master: "http://master-b:80"
+  replicas:
+    - "http://replica-b:80"

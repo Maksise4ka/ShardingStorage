@@ -1,0 +1,14 @@
+﻿- key: userIP
+  rate_limit:
+    unit: hour
+    requests_per_unit: 6
+- key: userIP
+  value: "172.28.1.10"
+  rate_limit:
+    unit: hour
+    requests_per_unit: 5
+- key: userIP
+  value: "172.28.10.10"
+  rate_limit:
+    unit: hour
+    requests_per_unit: 15

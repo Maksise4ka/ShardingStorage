@@ -1,0 +1,9 @@
+﻿- name: master-a
+  master: "http://localhost:7000"
+  replicas:
+    - "http://localhost:7001"
+
+- name: master-b
+  master: "http://localhost:7002"
+  replicas:
+    - "http://localhost:7003"

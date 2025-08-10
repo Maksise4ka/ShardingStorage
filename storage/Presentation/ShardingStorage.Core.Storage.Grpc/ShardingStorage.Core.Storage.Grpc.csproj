@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+
+    <ItemGroup>
+        <Protobuf Include="Protos\keys.proto" GrpcServices="Server"/>
+    </ItemGroup>
+
+
+    <ItemGroup>
+        <PackageReference Include="Grpc.AspNetCore" Version="2.57.0"/>
+    </ItemGroup>
+
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\Application\ShardingStorage.Core.Storage.Application.Contracts\ShardingStorage.Core.Storage.Application.Contracts.csproj" />
+      <ProjectReference Include="..\..\Domain\ShardingStorage.Core.Storage.Domain.Exceptions\ShardingStorage.Core.Storage.Domain.Exceptions.csproj" />
+    </ItemGroup>
+
+</Project>

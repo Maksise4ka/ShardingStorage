@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+import "google/protobuf/wrappers.proto";
+
+option csharp_namespace = "ShardingStorage.Core.Storage.Data.Access.LsmTree.Grpc";
+
+package lsm;
+
+service MasterService {
+  rpc Subscribe (SubscribeRequest) returns (SubscribeResponse);
+}
+
+service ReplicaService {
+  rpc Append (AppendRequest) returns (AppendResponse);
+}
+
+enum ReplicaType {
+  ReplicaType_Unknown = 0;
+  ReplicaType_Sync = 1;
+  ReplicaType_Async = 2;
+}
+
+message StorageItem {
+  string key = 1;
+  string value = 2;
+}
+
+message SubscribeRequest {
+  string replicaIp = 1;
+  ReplicaType replicaType = 2;
+}
+
+message SubscribeResponse {
+  repeated StorageItem items = 1;
+}
+
+message AppendRequest {
+  StorageItem item = 1;
+}
+
+message AppendResponse {
+}

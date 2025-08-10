@@ -1,0 +1,28 @@
+﻿syntax = "proto3";
+
+package keys;
+
+import "google/protobuf/wrappers.proto";
+
+option csharp_namespace = "ShardingStorage.Core.DataAccess.Lsm.Services";
+
+service StorageService {
+  rpc Get (GetRequest) returns (GetResponse);
+  rpc Set (SetRequest) returns (SetResponse);
+}
+
+message GetRequest {
+  string key = 1;
+}
+
+message GetResponse {
+  google.protobuf.StringValue value = 1;
+}
+
+message SetRequest {
+  string key = 1;
+  string value = 2;
+}
+
+message SetResponse {
+}

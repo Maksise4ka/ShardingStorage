@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Application\ShardingStorage.Core.Application\ShardingStorage.Core.Application.csproj" />
+        <ProjectReference Include="..\Infrastructure\ShardingStorage.Core.DataAccess.Lsm\ShardingStorage.Core.DataAccess.Lsm.csproj" />
+        <ProjectReference Include="..\Infrastructure\ShardingStorage.Core.DataAccess.Redis\ShardingStorage.Core.DataAccess.Redis.csproj" />
+        <ProjectReference Include="..\Presentation\ShardingStorage.Core.Grpc\ShardingStorage.Core.Grpc.csproj" />
+    </ItemGroup>
+</Project>

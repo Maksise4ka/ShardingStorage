@@ -1,0 +1,22 @@
+﻿syntax = "proto3";
+
+package rateLimiter;
+
+option csharp_namespace = "ShardingStorage.Grpc.Contracts";
+
+service RateLimiterService {
+    rpc Update (UpdateRequest) returns (UpdateResponse);
+}
+
+message RateLimitDescriptor {
+    string key = 1;
+    string value = 2;
+}
+
+message UpdateRequest {
+    repeated RateLimitDescriptor descriptors = 1;
+}
+
+message UpdateResponse {
+    bool allowed = 1;
+}

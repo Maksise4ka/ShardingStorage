@@ -1,0 +1,15 @@
+- name: redis-1
+  master: "localhost:7000"
+  password: dungeonmaster
+  replicas:
+    - name: redis-1-replica
+      replica: "localhost:7002"
+      password: dungeonmaster
+
+- name: redis-2
+  master: "localhost:7001"
+  password: dungeonmaster
+  replicas:
+    - name: redis-2-replica
+      replica: "localhost:7003"
+      password: dungeonmaster

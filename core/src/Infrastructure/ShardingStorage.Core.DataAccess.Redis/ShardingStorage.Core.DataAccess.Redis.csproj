@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\Application\Abstractions\ShardingStorage.Core.DataAccess.Abstractions\ShardingStorage.Core.DataAccess.Abstractions.csproj" />
+      <ProjectReference Include="..\ShardingStorage.Core.DataAccess.Common\ShardingStorage.Core.DataAccess.Common.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="7.0.13" />
+        <PackageReference Include="StackExchange.Redis" Version="2.7.4" />
+        <PackageReference Include="YamlDotNet" Version="13.7.1" />
+    </ItemGroup>
+</Project>

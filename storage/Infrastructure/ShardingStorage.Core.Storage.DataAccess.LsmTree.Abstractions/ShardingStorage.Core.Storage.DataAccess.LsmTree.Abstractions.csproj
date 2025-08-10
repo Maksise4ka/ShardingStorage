@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\Domain\ShardingStorage.Core.Storage.Domain\ShardingStorage.Core.Storage.Domain.csproj" />
+      <ProjectReference Include="..\ShardingStorage.Core.Storage.DataAccess.LsmTree.Common\ShardingStorage.Core.Storage.DataAccess.LsmTree.Common.csproj" />
+    </ItemGroup>
+
+</Project>

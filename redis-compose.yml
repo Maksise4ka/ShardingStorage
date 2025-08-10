@@ -1,0 +1,65 @@
+﻿networks:
+  hl-lab3-network:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.28.0.0/16
+          
+
+redis-master-a:
+  image: redis:latest
+  networks:
+    hl-lab3-network:
+      ipv4_address: 172.28.1.4
+  ports:
+    - "7000:7000"
+  volumes:
+    - ./redis/redis-master-a:/redis
+    - redis-master-a-data:/data
+  command: redis-server /redis/redis.conf
+  restart: always
+
+redis-master-b:
+  image: redis:latest
+  networks:
+    hl-lab3-network:
+      ipv4_address: 172.28.1.5
+  ports:
+    - "7001:7001"
+  volumes:
+    - ./redis/redis-master-b:/redis
+    - redis-master-b-data:/data
+  command: redis-server /redis/redis.conf
+  restart: always
+
+redis-replica-a:
+  image: redis:latest
+  networks:
+    hl-lab3-network:
+      ipv4_address: 172.28.1.6
+  ports:
+    - "7002:7002"
+  volumes:
+    - ./redis/redis-replica-a:/redis
+    - redis-replica-a-data:/data
+  command: redis-server /redis/redis.conf
+  restart: always
+
+redis-replica-b:
+  image: redis:latest
+  networks:
+    hl-lab3-network:
+      ipv4_address: 172.28.1.7
+  ports:
+    - "7003:7003"
+  volumes:
+    - ./redis/redis-replica-b:/redis
+    - redis-replica-b-data:/data
+  command: redis-server /redis/redis.conf
+  restart: always
+
+volumes:
+  redis-master-a-data:
+  redis-master-b-data:
+  redis-replica-a-data:
+  redis-replica-b-data:

@@ -1,0 +1,167 @@
+﻿#services:
+#  master-a:
+#    build: storage/
+#    volumes:
+#      - ./lsm/master-a/appsettings.json:/app/appsettings.json
+#      - lsm-master-a:/app/fs
+#    ports:
+#      - "7000:80"
+#
+#  replica-a:
+#    build: storage/
+#    volumes:
+#      - ./lsm/replica-a/appsettings.json:/app/appsettings.json
+#      - lsm-replica-a:/app/fs
+#    ports:
+#      - "7001:80"
+#    depends_on:
+#      - master-a
+#
+#  master-b:
+#    build: storage/
+#    volumes:
+#      - ./lsm/master-b/appsettings.json:/app/appsettings.json
+#      - lsm-master-b:/app/fs
+#    ports:
+#      - "7002:80"
+#
+#  replica-b:
+#    build: storage/
+#    volumes:
+#      - ./lsm/replica-b/appsettings.json:/app/appsettings.json
+#      - lsm-replica-b:/app/fs
+#    ports:
+#      - "7003:80"
+#    depends_on:
+#      - master-b
+#
+#  limiter:
+#    build: core/
+#    ports:
+#      - "8000:80"
+#    volumes:
+#      - ./lsm/server/appsettings.json:/app/appsettings.json
+#      - ./lsm/server/lsm-config.yaml:/app/lsm-config.yaml
+#      - ./limiter/rate-limiting-config.yaml:/app/rate-limiting-config.yaml
+#  
+#  orders:
+#    build: orders/
+#    depends_on: 
+#      - limiter
+#    ports:
+#      - "8001:80"
+#    environment:
+#      - RATE_LIMITER_ADDRESS=http://limiter:80
+#
+#  orders-client:
+#    build: orders-client/
+#    depends_on:
+#      - orders 
+#    environment:
+#      - BASE_ADDRESS=http://orders:80
+#
+#volumes:
+#  lsm-master-a:
+#  lsm-replica-a:
+#  lsm-master-b:
+#  lsm-replica-b:
+
+networks:
+  hl-lab3-network:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.28.0.0/16
+
+services:
+  redis-master-a:
+    image: redis:latest
+#    networks:
+#      hl-lab3-network:
+#        ipv4_address: 172.28.1.4
+    ports:
+      - "7000:7000"
+    volumes:
+      - ./redis/redis-master-a:/redis
+      - redis-master-a-data:/data
+    command: redis-server /redis/redis.conf
+    restart: always
+
+  redis-master-b:
+    image: redis:latest
+#    networks:
+#      hl-lab3-network:
+#        ipv4_address: 172.28.1.5
+    ports:
+      - "7001:7001"
+    volumes:
+      - ./redis/redis-master-b:/redis
+      - redis-master-b-data:/data
+    command: redis-server /redis/redis.conf
+    restart: always
+
+  redis-replica-a:
+    image: redis:latest
+#    networks:
+#      hl-lab3-network:
+#        ipv4_address: 172.28.1.6
+    ports:
+      - "7002:7002"
+    volumes:
+      - ./redis/redis-replica-a:/redis
+      - redis-replica-a-data:/data
+    command: redis-server /redis/redis.conf
+    restart: always
+
+  redis-replica-b:
+    image: redis:latest
+    networks:
+      hl-lab3-network:
+        ipv4_address: 172.28.1.7
+    ports:
+      - "7003:7003"
+    volumes:
+      - ./redis/redis-replica-b:/redis
+      - redis-replica-b-data:/data
+    command: redis-server /redis/redis.conf
+    restart: always
+  
+  limiter:
+    build: core/
+    networks:
+      hl-lab3-network:
+        ipv4_address: 172.28.1.8
+    ports:
+      - "8000:80"
+    volumes:
+      - ./redis/server/appsettings.json:/app/appsettings.json
+      - ./redis/server/redis-sharding-config.yaml:/app/redis-sharding-config.yaml
+      - ./limiter/rate-limiting-config.yaml:/app/rate-limiting-config.yaml
+
+  orders:
+    build: orders/
+    networks:
+      hl-lab3-network:
+        ipv4_address: 172.28.1.9
+    depends_on: 
+      - limiter
+    ports:
+      - "8001:80"
+    environment:
+      - RATE_LIMITER_ADDRESS=http://limiter:80
+
+  orders-client:
+    build: orders-client/
+    networks:
+      hl-lab3-network:
+        ipv4_address: 172.28.1.10
+    depends_on:
+      - orders 
+    environment:
+      - BASE_ADDRESS=http://orders:80
+
+volumes:
+  redis-master-a-data:
+  redis-master-b-data:
+  redis-replica-a-data:
+  redis-replica-b-data:

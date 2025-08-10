@@ -1,0 +1,23 @@
+- name: redis-1
+  master: "redis-master-a:7000"
+  password: dungeonmaster
+  replicas:
+    - name: redis-1-replica
+      replica: "redis-replica-a:7003"
+      password: dungeonmaster
+
+- name: redis-2
+  master: "redis-master-b:7001"
+  password: dungeonmaster
+  replicas:
+    - name: redis-2-replica
+      replica: "http://redis-replica-b:7004"
+      password: dungeonmaster
+
+#- name: redis-3
+#  master: "localhost:7002"
+#  password: dungeonmaster
+#  replicas:
+#    - name: redis-3-replica
+#      replica: "localhost:7005"
+#      password: dungeonmaster
